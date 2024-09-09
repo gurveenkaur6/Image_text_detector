@@ -5,12 +5,16 @@ import easyocr
 
 
 # read the image
-image_path = "images/s-wx-wu7mesh-signs-along-the-sea-to-sky-highway.JPG.avif"
+image_path = "images/American_highway_exit_sign.png"
 image= cv2.imread(image_path, cv2.IMREAD_COLOR)
 
-# instanciate text detector
-
+# initialise the text detector
+reader = easyocr.Reader(['en'])
 
 # detect the text on the image
+results = reader.readtext(image)
+for t in results:
+    
+    print(results)
 
 # draw bbox and text
