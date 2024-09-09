@@ -16,6 +16,8 @@ reader = easyocr.Reader(['en'])
 # This method returns a list of results, where each result includes the bounding box, detected text, and confidence score
 results = reader.readtext(image)
 
+threshold = 0.25
+
 # draw bbox and text
 for t in results:
     print(t)
@@ -27,10 +29,12 @@ for t in results:
     top_left = tuple(map(int,top_left)) 
     bottom_right = tuple(map(int, bottom_right))
 
-    # drawing a green rectangle on the image
-    cv2.rectangle(image, top_left, bottom_right, (0,255,0), 5)
+    if threshold < score:
 
-    cv2.putText(image, text, (top_left[0], top_left[1] - 10) , cv2.FONT_HERSHEY_COMPLEX, 1, (0,255,255), 2)
+        # drawing a green rectangle on the image
+        cv2.rectangle(image, top_left, bottom_right, (0,255,0), 5)
+
+        cv2.putText(image, text, (top_left[0], top_left[1] - 10) , cv2.FONT_HERSHEY_COMPLEX, 1, (0,120,225), 2)
 
 # need to convert from bgr to rgb to match the color of the source/original image
 plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
