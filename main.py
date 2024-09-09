@@ -1,6 +1,7 @@
 import cv2
 import matplotlib.pyplot as plt
 import easyocr
+import bbox
 
 
 
@@ -12,9 +13,24 @@ image= cv2.imread(image_path, cv2.IMREAD_COLOR)
 reader = easyocr.Reader(['en'])
 
 # detect the text on the image
+# This method returns a list of results, where each result includes the bounding box, detected text, and confidence score
 results = reader.readtext(image)
-for t in results:
-    
-    print(results)
 
 # draw bbox and text
+for t in results:
+    print(t)
+    bbox, text, score = t
+
+    top_left, top_right,bottom_right,bottom_left = bbox
+
+    # pixels can only be whole numbers
+    top_left = tuple(map(int,top_left)) 
+    bottom_right = tuple(map(int, bottom_right))
+
+    # drawing a green rectangle on the image
+    cv2.rectangle(image, top_left, bottom_right, (0,255,0), 5)
+
+    
+
+plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+plt.show()
