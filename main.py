@@ -16,7 +16,7 @@ reader = easyocr.Reader(['en'])
 # This method returns a list of results, where each result includes the bounding box, detected text, and confidence score
 results = reader.readtext(image)
 
-threshold = 0.25
+threshold = 0.60
 
 # draw bbox and text
 for t in results:
